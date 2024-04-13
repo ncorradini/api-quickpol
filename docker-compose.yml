@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  database:
+    image: mariadb:latest
+    container_name: api-quickpol
+    ports:
+      - '0.0.0.0:3307:3306'
+    expose:
+      - 3306
+    volumes:
+      - ./docker/config/initdb:/docker-entrypoint-initdb.d
+      - quickpol-mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_USER_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE_NAME}
+      # MYSQL_USER: ${DB_USER_NAME}
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
+      MYSQL_TCP_PORT: 3306
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: api-quickpol-phpmyadmin
+    depends_on:
+      - database
+    ports:
+      - '0.0.0.0:8080:80'
+    volumes:
+      - ./docker/data/phpmyadmin:/sessions
+    links:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USER_NAME}
+      PMA_PASSWORD: ${DB_USER_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_USER_PASSWORD}
+      MYSQL_USER: ${DB_USER_NAME}
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
+
+volumes:
+  quickpol-mariadb:
+
