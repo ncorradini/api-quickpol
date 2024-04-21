@@ -1,6 +1,6 @@
-import { Question } from 'src/modules/question/entities/question.entity';
-import { CustomBaseEntity } from 'src/shared/entities/base.entity';
 import { Entity, Column, OneToMany } from 'typeorm';
+import { Question } from '../../../modules/question/entities/question.entity';
+import { CustomBaseEntity } from '../../../shared/entities/base.entity';
 
 @Entity({ name: 'survey' })
 export class Survey extends CustomBaseEntity {
@@ -10,6 +10,8 @@ export class Survey extends CustomBaseEntity {
   @Column()
   emailCreator: string;
 
-  @OneToMany(() => Question, (question) => question.survey)
+  @OneToMany(() => Question, (question) => question.survey, {
+    cascade: true,
+  })
   questions: Question[];
 }

@@ -1,6 +1,6 @@
-import { Survey } from 'src/modules/survey/entities/survey.entity';
-import { CustomBaseEntity } from 'src/shared/entities/base.entity';
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Survey } from '../../../modules/survey/entities/survey.entity';
+import { CustomBaseEntity } from '../../../shared/entities/base.entity';
 import { Answer } from '../../answer/entities/answer.entity';
 
 @Entity({ name: 'question' })
@@ -11,6 +11,8 @@ export class Question extends CustomBaseEntity {
   @ManyToOne(() => Survey, (survey) => survey.questions)
   survey: Survey;
 
-  @OneToMany(() => Answer, (answer) => answer.question)
+  @OneToMany(() => Answer, (answer) => answer.question, {
+    cascade: true,
+  })
   answers: Answer[];
 }

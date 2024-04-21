@@ -1,5 +1,5 @@
-import { CustomBaseEntity } from 'src/shared/entities/base.entity';
 import { Entity, Column, ManyToOne } from 'typeorm';
+import { CustomBaseEntity } from '../../../shared/entities/base.entity';
 import { Question } from '../../question/entities/question.entity';
 
 @Entity({ name: 'answer' })
@@ -10,6 +10,6 @@ export class Answer extends CustomBaseEntity {
   @ManyToOne(() => Question, (question) => question.answers)
   question: Question;
 
-  @Column()
+  @Column({ default: 0 })
   voteCouting: number;
 }
