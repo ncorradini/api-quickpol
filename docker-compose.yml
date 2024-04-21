@@ -3,7 +3,7 @@ version: '3.8'
 services:
   database:
     image: mariadb:latest
-    container_name: api-quickpol-mariadb
+    container_name: api-survey-mariadb
     ports:
       - '3307:3306'
     expose:
@@ -14,11 +14,11 @@ services:
       MYSQL_PASSWORD: ${DB_USER_PASSWORD}
       MYSQL_TCP_PORT: 3306
     volumes:
-      - api-quickpol:/var/lib/mysql
+      - api-survey:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
-    container_name: api-quickpol-phpmyadmin
+    container_name: api-survey-phpmyadmin
     depends_on:
       - database
     ports:
@@ -32,8 +32,8 @@ services:
       MYSQL_USER: ${DB_USER_NAME}
       MYSQL_PASSWORD: ${DB_USER_PASSWORD}
     volumes:
-      - api-quickpol:/var/lib/phpmyadmin
+      - api-survey:/var/lib/phpmyadmin
 
 volumes:
-  api-quickpol:
-    name: api-quickpol
+  api-survey:
+    name: api-survey
